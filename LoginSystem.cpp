@@ -87,14 +87,14 @@ vector<User> getUsers() {
 		newuserlist.close();
 		return users;
 	}
-	while(usersList.good()){
+	while (usersList.good()) {
 		string name;
 		getline(usersList, name, ' ');
 		string pass;
 		getline(usersList, pass, '\n');
 		if (name != "" && pass != "") {
-		//	cout << "< Log: " << name << endl;
-		//	cout << "< Pass: " << pass << endl;
+			//	cout << "< Log: " << name << endl;
+			//	cout << "< Pass: " << pass << endl;
 			users.push_back(User(name, pass));
 		}
 	}
@@ -118,30 +118,45 @@ void enter(vector<User>users) {
 	cout << "> Password: "; cin >> password;
 	for (auto user : users) {
 		if (user.check(username, password)) {
+			system("cls");
+			square(35, 3, 9, 4);
+			gotoxy(10, 5);
 			cout << "< You are successfully logged in >" << endl;
+			gotoxy(11, 7);
 			system("pause");
 			return;
 		}
 	}
+	system("cls");
+	square(35, 3, 9, 4);
+	gotoxy(10, 5);
 	cout << "<! The information is not valid !>" << endl;
+	gotoxy(11, 7);
 	system("pause");
 	return;
 }
-void userRegistration(vector<User>&users) {
+void userRegistration(vector<User>& users) {
 	ofstream newUser;
 	newUser.open("usersList.txt", std::ios::app);
 
 	string username, password;
-
-	cout << "> Enter your username: "; cin >> username;
+	square(40, 3, 9, 4);
+	gotoxy(10, 5);
+	cout << " Enter your username: ";
+	cin >> username;
 	while (1) {
-		cout << "> Enter you password: ";  cin >> password;
+		square(40, 5, 9, 4);
+		gotoxy(10, 5);
+		cout << " Enter your username: " << username;
+		gotoxy(10, 6);
+		cout << " Enter you password: ";  cin >> password;
 		if (users[0].isPassValid(password)) {
 			break;
 		}
-		cout << "< Your password is not valid, try again >" << endl;
+		gotoxy(10, 7);
+		cout << " Your password is not valid, try again ";
 	}
-	
+
 	newUser << username << " " << password << endl;
 	users.push_back(User(username, password));
 	return;
